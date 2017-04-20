@@ -1,0 +1,24 @@
+{
+  "name": "groupinputs",
+  "version": "0.8.3",
+  "description": "jQuery Group Inputs. Easy data input into several inputs.",
+  "main": "jquery.groupinputs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bio/groupinputs.git"
+  },
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "input"
+  ],
+  "author": "Pavel Kornilov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bio/groupinputs/issues"
+  },
+  "homepage": "https://github.com/bio/groupinputs#readme"
+}

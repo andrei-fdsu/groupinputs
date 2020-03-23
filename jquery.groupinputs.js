@@ -46,11 +46,6 @@ function caret(node, start, end) {
 }
 
 $.fn.groupinputs = function() {
-    // iOS does not support input.focus()
-    if (/iPad|iPhone/.test(navigator.platform)) {
-        return this;
-    }
-
     var inputs = this,
         inputsMaxlength = [],
         totalMaxlength = 0;
@@ -109,8 +104,10 @@ $.fn.groupinputs = function() {
                     if (!isSetFocus) {
                         if (newCaretStart < maxlength) {
                             isSetFocus = true;
-                            inputs.eq(i).focus();
-                            caret(inputs[i], newCaretStart, newCaretStart);
+							setTimeout(function() {
+								inputs.eq(i).focus();
+								caret(inputs[i], newCaretStart, newCaretStart);
+							}, 100);
                         }
                         newCaretStart -= valLength;
                     }
@@ -119,8 +116,10 @@ $.fn.groupinputs = function() {
             }
             if (!isSetFocus) {
                 // setTimeout may be necessary for chrome and safari (https://bugs.webkit.org/show_bug.cgi?id=56271)
-                inputs.eq(i).focus();
-                caret(inputs[i], newCaretStart, newCaretStart);
+				setTimeout(function() {
+					inputs.eq(i).focus();
+					caret(inputs[i], newCaretStart, newCaretStart);
+				}, 100);
             }
         }
     }
@@ -149,8 +148,10 @@ $.fn.groupinputs = function() {
                     caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 // input is no last
                 ) {
-                    inputs.eq(index + 1).focus();
-                    caret(inputs[index + 1], 0, 0);
+					setTimeout(function() {
+						inputs.eq(index + 1).focus();
+						caret(inputs[index + 1], 0, 0);
+					}, 100);
                     e.preventDefault(); // no next motion
                 }
             }
@@ -163,8 +164,10 @@ $.fn.groupinputs = function() {
                 ) {
                     var toFocus = inputs.eq(index - 1),
                         lengthToFocus = toFocus.val().length;
-                    toFocus.focus();
-                    caret(toFocus[0], lengthToFocus, lengthToFocus);
+					setTimeout(function() {
+						toFocus.focus();
+						caret(toFocus[0], lengthToFocus, lengthToFocus);
+					}, 100);
                     if (e.keyCode === LEFT_CODE) {
                         e.preventDefault(); // no next motion
                     }
@@ -196,8 +199,10 @@ $.fn.groupinputs = function() {
                     index !== inputs.length - 1 && // input is no last
                     this.value.length === options.maxlength
                 ) {
-                    inputs.eq(index + 1).focus();
-                    caret(inputs[index + 1], 0, 0);
+					setTimeout(function() {
+						inputs.eq(index + 1).focus();
+						caret(inputs[index + 1], 0, 0);
+					}, 100);
                 }
             }
             if (eventType === 'paste') {

@@ -9,6 +9,40 @@
 
 var isOpera = !!window.opera,
     MAXLENGTH = 'maxlength';
+	
+function focusAndCaret(input, node, start, end) {
+	if (/iPad|iPhone/.test(navigator.platform)) {
+        // create invisible dummy input to receive the focus first
+		const fakeInput = document.createElement('input');
+		fakeInput.setAttribute('type', 'text');
+		fakeInput.style.position = 'absolute';
+		fakeInput.style.opacity = 0;
+		fakeInput.style.height = 0;
+		fakeInput.style.fontSize = '16px';
+
+		// you may need to append to another element depending on the browser's auto 
+		// zoom/scroll behavior
+		document.body.prepend(fakeInput);
+
+		// focus so that subsequent async focus will work
+		fakeInput.focus();
+
+		setTimeout(() => {
+			// now we can focus on the target input
+			input.focus();
+			caret(node, start, end);
+			
+			// cleanup
+			fakeInput.remove();
+
+		}, 100);
+    } else {
+		setTimeout(function() {
+			input.focus();
+			caret(node, start, end);
+		}, 100);
+	}
+}
 
 function caret(node, start, end) {
     var range;
@@ -104,10 +138,7 @@ $.fn.groupinputs = function() {
                     if (!isSetFocus) {
                         if (newCaretStart < maxlength) {
                             isSetFocus = true;
-							setTimeout(function() {
-								inputs.eq(i).focus();
-								caret(inputs[i], newCaretStart, newCaretStart);
-							}, 100);
+							focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
                         }
                         newCaretStart -= valLength;
                     }
@@ -115,11 +146,7 @@ $.fn.groupinputs = function() {
                 }
             }
             if (!isSetFocus) {
-                // setTimeout may be necessary for chrome and safari (https://bugs.webkit.org/show_bug.cgi?id=56271)
-				setTimeout(function() {
-					inputs.eq(i).focus();
-					caret(inputs[i], newCaretStart, newCaretStart);
-				}, 100);
+				focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
             }
         }
     }
@@ -148,10 +175,7 @@ $.fn.groupinputs = function() {
                     caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 // input is no last
                 ) {
-					setTimeout(function() {
-						inputs.eq(index + 1).focus();
-						caret(inputs[index + 1], 0, 0);
-					}, 100);
+					focusAndCaret(inputs.eq(index + 1), inputs[iindex + 1], 0, 0);
                     e.preventDefault(); // no next motion
                 }
             }
@@ -164,10 +188,7 @@ $.fn.groupinputs = function() {
                 ) {
                     var toFocus = inputs.eq(index - 1),
                         lengthToFocus = toFocus.val().length;
-					setTimeout(function() {
-						toFocus.focus();
-						caret(toFocus[0], lengthToFocus, lengthToFocus);
-					}, 100);
+					focusAndCaret(toFocus, toFocus[0], lengthToFocus, lengthToFocus);
                     if (e.keyCode === LEFT_CODE) {
                         e.preventDefault(); // no next motion
                     }
@@ -199,10 +220,7 @@ $.fn.groupinputs = function() {
                     index !== inputs.length - 1 && // input is no last
                     this.value.length === options.maxlength
                 ) {
-					setTimeout(function() {
-						inputs.eq(index + 1).focus();
-						caret(inputs[index + 1], 0, 0);
-					}, 100);
+					focusAndCaret(inputs.eq(index + 1), inputs[iindex + 1], 0, 0);
                 }
             }
             if (eventType === 'paste') {

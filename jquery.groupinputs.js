@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.8.3
+ * GroupInputs v. 0.8.7
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -175,7 +175,7 @@ $.fn.groupinputs = function() {
                     caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 // input is no last
                 ) {
-					focusAndCaret(inputs.eq(index + 1), inputs[iindex + 1], 0, 0);
+					focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
                     e.preventDefault(); // no next motion
                 }
             }
@@ -220,7 +220,7 @@ $.fn.groupinputs = function() {
                     index !== inputs.length - 1 && // input is no last
                     this.value.length === options.maxlength
                 ) {
-					focusAndCaret(inputs.eq(index + 1), inputs[iindex + 1], 0, 0);
+					focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
                 }
             }
             if (eventType === 'paste') {

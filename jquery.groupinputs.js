@@ -27,18 +27,19 @@ function focusAndCaret(input, node, start, end) {
 		// focus so that subsequent async focus will work
 		fakeInput.focus();
 
-		setTimeout(() => {
+		setTimeout(function() {
 			// now we can focus on the target input
 			input.focus();
 			caret(node, start, end);
 			
 			// cleanup
 			fakeInput.remove();
-
 		}, 100);
     } else {
-		input.focus();
-		caret(node, start, end);
+		setTimeout(function() {
+			input.focus();
+			caret(node, start, end);
+		}, 100);
 	}
 }
 

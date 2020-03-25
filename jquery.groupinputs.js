@@ -37,10 +37,8 @@ function focusAndCaret(input, node, start, end) {
 
 		}, 100);
     } else {
-		setTimeout(function() {
-			input.focus();
-			caret(node, start, end);
-		}, 100);
+		input.focus();
+		caret(node, start, end);
 	}
 }
 

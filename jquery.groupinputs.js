@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.8.7
+ * GroupInputs v. 0.8.9
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -9,38 +9,38 @@
 
 var isOpera = !!window.opera,
     MAXLENGTH = 'maxlength';
-	
+
 function focusAndCaret(input, node, start, end) {
-	if (/iPad|iPhone/.test(navigator.platform)) {
+    if (/iPad|iPhone/.test(navigator.platform)) {
         // create invisible dummy input to receive the focus first
-		const fakeInput = document.createElement('input');
-		fakeInput.setAttribute('type', 'text');
-		fakeInput.style.position = 'absolute';
-		fakeInput.style.opacity = 0;
-		fakeInput.style.height = 0;
-		fakeInput.style.fontSize = '16px';
+        const fakeInput = document.createElement('input');
+        fakeInput.setAttribute('type', 'text');
+        fakeInput.style.position = 'absolute';
+        fakeInput.style.opacity = 0;
+        fakeInput.style.height = 0;
+        fakeInput.style.fontSize = '16px';
 
-		// you may need to append to another element depending on the browser's auto 
-		// zoom/scroll behavior
-		document.body.prepend(fakeInput);
+        // you may need to append to another element depending on the browser's auto 
+        // zoom/scroll behavior
+        document.body.prepend(fakeInput);
 
-		// focus so that subsequent async focus will work
-		fakeInput.focus();
+        // focus so that subsequent async focus will work
+        fakeInput.focus();
 
-		setTimeout(function() {
-			// now we can focus on the target input
-			input.focus();
-			caret(node, start, end);
-			
-			// cleanup
-			fakeInput.remove();
-		}, 100);
+        setTimeout(function() {
+            // now we can focus on the target input
+            input.focus();
+            caret(node, start, end);
+
+            // cleanup
+            fakeInput.remove();
+        }, 100);
     } else {
-		setTimeout(function() {
-			input.focus();
-			caret(node, start, end);
-		}, 100);
-	}
+        setTimeout(function() {
+            input.focus();
+            caret(node, start, end);
+        }, 100);
+    }
 }
 
 function caret(node, start, end) {
@@ -137,7 +137,7 @@ $.fn.groupinputs = function() {
                     if (!isSetFocus) {
                         if (newCaretStart < maxlength) {
                             isSetFocus = true;
-							focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
+                            focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
                         }
                         newCaretStart -= valLength;
                     }
@@ -145,7 +145,7 @@ $.fn.groupinputs = function() {
                 }
             }
             if (!isSetFocus) {
-				focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
+                focusAndCaret(inputs.eq(i), inputs[i], newCaretStart, newCaretStart);
             }
         }
     }
@@ -174,7 +174,7 @@ $.fn.groupinputs = function() {
                     caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 // input is no last
                 ) {
-					focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
+                    focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
                     e.preventDefault(); // no next motion
                 }
             }
@@ -187,7 +187,7 @@ $.fn.groupinputs = function() {
                 ) {
                     var toFocus = inputs.eq(index - 1),
                         lengthToFocus = toFocus.val().length;
-					focusAndCaret(toFocus, toFocus[0], lengthToFocus, lengthToFocus);
+                    focusAndCaret(toFocus, toFocus[0], lengthToFocus, lengthToFocus);
                     if (e.keyCode === LEFT_CODE) {
                         e.preventDefault(); // no next motion
                     }
@@ -219,7 +219,7 @@ $.fn.groupinputs = function() {
                     index !== inputs.length - 1 && // input is no last
                     this.value.length === options.maxlength
                 ) {
-					focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
+                    focusAndCaret(inputs.eq(index + 1), inputs[index + 1], 0, 0);
                 }
             }
             if (eventType === 'paste') {
